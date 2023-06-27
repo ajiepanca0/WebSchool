@@ -861,6 +861,44 @@
     </div>
   </section>
 
+
+  <section id="registration" style="margin-top: 5%;  background:#4fa376">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="section-header">
+            <h2>Biaya Pendaftaran</h2>
+            <p></p>
+          </div>          
+
+          <div class="form-group">
+            <label><b>Gelombang :</b></label>
+
+            <label><b>Anda Masuk Gelombang </b></label>
+
+          </div>
+
+          <div class="form-group">
+            <label for="nama"><b>Masukan Jumlah Pembayaran Tunai :</b></label>
+            <input type="text" class="form-control" id="jumlah_pembayaran_tunai" name="jumlah_pembayaran_tunai" required>
+          </div>
+
+          <div class="form-group">
+            <label for="nama"><b>Masukan Jumlah Pembayaran Angsuran 1 :</b></label>
+            <input type="text" class="form-control" id="jumlah_pembayaran_angsuran_1" name="jumlah_pembayaran_angsuran_1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="nama"><b>Masukan Jumlah Pembayaran Angsuran 2 :</b></label>
+            <input type="text" class="form-control" id="jumlah_pembayaran_angsuran_2" name="jumlah_pembayaran_angsuran_2" required>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <section id="registration" style="margin-top: 5%">
     <div class="container">
       <div class="row justify-content-center">
