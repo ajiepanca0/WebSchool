@@ -27,6 +27,8 @@
 
   <!-- Main Stylesheet File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+
 
   <!-- =======================================================
     Theme Name: Reveal
@@ -37,6 +39,8 @@
 </head>
 
 <body id="body">
+
+
 
   <!--==========================
     Top Bar
@@ -349,7 +353,7 @@
       <div class="container">
         <div class="section-header">
           <h2>Ulasan alumni</h2>
-          <p>Berikut ini beberapa contoh ulasan dari alumni yang pernah berpendidikan</p>
+          <p>Berikut ini beberapa contoh ulasan dari alumni yang pernah berpendidikan disini</p>
           <button style="margin-top: 1%" type="button" class="btn-primary" data-toggle="modal" data-target="#ulasanAlumniModal">
             Tambah Ulasan
           </button>          
@@ -384,20 +388,6 @@
     <!--==========================
       Call To Action Section
     ============================-->
-    <section id="call-to-action" class="wow fadeInUp">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-9 text-center text-lg-left">
-            <h3 class="cta-title">Call To Action</h3>
-            <p class="cta-text"> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-          <div class="col-lg-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="#">Call To Action</a>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- #call-to-action -->
 
     <!--==========================
       Our Team Section
@@ -598,6 +588,63 @@
       </div>
     </section><!-- #contact -->
 
+
+    <section id="call-to-action" class="wow fadeInUp">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-9 text-center text-lg-left">
+            <h3 class="cta-title">Kritik & Saran</h3>
+            <p class="cta-text">kritik dan saran anda menjadikan kamu untuk dapat terus berkembang </p>
+          </div>
+
+          <div class="col-lg-3 cta-btn-container text-center">
+            <button  style="margin-top: 1%;background-color: #4fa376" type="button" class="cta-btn align-middle" data-toggle="modal" data-target="#kritiksaranmodal">
+              Tambah 
+            </button>  
+          </div>
+        </div>
+
+
+      <div class="row">
+          <a style="color: white; margin-top:2%"><b>ajiepanca</b></a>
+          <div class="col-lg-12 cta-row-container ">
+            <a class="cta-btn align-middle" href="#">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Kritik/Saran</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Di perbanyak lagi fasilitas yang ada</td>
+                  </tr>
+                </tbody>
+              </table>
+            </a>
+          </div>
+          
+          <div class="col-lg-12 cta-row-container ">
+            <a class="cta-btn align-middle" href="#">
+              <table>
+                <thead>
+                  <tr>
+                    <th><b>Balasan</b></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Terima kasih atas masukan Anda. Kami akan mempertimbangkan untuk meningkatkan fasilitas yang tersedia.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </a>
+          </div>
+      </div>
+
+    </section><!-- #call-to-action -->
+
+
   </main>
 
   <!--==========================
@@ -673,6 +720,44 @@
     </div>
 </div>
 
+<div class="modal fade bd-example-modal-lg" id="kritiksaranmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Kritik / Saran</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          <form action="{{ route('tambahkritiksaran') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="form-group">
+                  <label for="judul">Nama</label>
+                  <input type="text" class="form-control" name="nama" placeholder="Masukan Nama">
+              </div>
+
+              <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" name="email" placeholder="Masukan Email">
+              </div>
+
+              <div class="form-group">
+                <label for="ulasan">Kritik / Saran :</label>
+                <textarea class="form-control" id="ulasan" name="ulasan" rows="3" placeholder="Tulis ulasan Anda"></textarea>
+              </div>
+    
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-coklat">Save changes</button>
+              </div>
+          </form>
+
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- JavaScript Libraries -->
   <script src="assets/lib/jquery/jquery.min.js"></script>
@@ -691,6 +776,19 @@
 
   <!-- Template Main Javascript File -->
   <script src="assets/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+
+  @if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Ulasan Berhasil Ditambahkan!',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
 
 </body>
 

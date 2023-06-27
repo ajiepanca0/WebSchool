@@ -53,7 +53,7 @@ class Ulasan_Alumni_Controller extends Controller
             'updated_at'=> date('Y-m-d H:i:s'),
         ]);
 
-        return redirect()->back()->with('success', 'Blog berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Menunggu Konfirmasi');
 
     }
 

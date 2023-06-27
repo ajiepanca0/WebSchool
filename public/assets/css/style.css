@@ -1129,6 +1129,21 @@ body.mobile-nav-active #mobile-nav-toggle {
         -ms-flex-pack: end;
         justify-content: flex-end;
     }
+
+    #call-to-action .cta-row-container {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: start;
+        -webkit-align-items: start;
+        -ms-flex-align: start;
+        align-items: stretch;
+        -webkit-box-pack: end;
+        -webkit-justify-content: start;
+        -ms-flex-pack: end;
+        justify-content: stretch;
+    }
 }
 
 @media (max-width: 768px) {

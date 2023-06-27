@@ -32,4 +32,6 @@ Route::post('/tambahulasanalumni', [Ulasan_Alumni_Controller::class, 'tambahUlas
 Route::get('/ubahstatus/{id}', [Ulasan_Alumni_Controller::class, 'ubahStatus'])->name('ubahstatus');
 
 
+Route::post('/tambahkritiksaran', [Ulasan_Alumni_Controller::class, 'tambahUlasan'])->name('tambahkritiksaran');
+
 
