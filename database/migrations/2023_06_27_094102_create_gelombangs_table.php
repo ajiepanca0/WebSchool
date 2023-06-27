@@ -17,6 +17,8 @@ class CreateGelombangsTable extends Migration
             $table->id();
             $table->string('nama_gelombang', 50);
             $table->date('batas_gelombang');
+            $table->decimal('nominal1', 10, 2);
+            $table->decimal('nominal2', 10, 2);
             $table->timestamps();
         });
     }

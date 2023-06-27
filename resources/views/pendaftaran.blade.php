@@ -174,12 +174,7 @@
               <label for="saudara_kandung"><b>Jumlah Saudara Kandung :</b></label>
               <input type="number" class="form-control" id="saudara_kandung" name="saudara_kandung" required>
             </div>
-
-            <div class="form-group">
-              <label for="saudara_tiri"><b>Jumlah Saudara Tiri :</b></label>
-              <input type="number" class="form-control" id="saudara_tiri" name="saudara_tiri" required>
-            </div>
-
+            
             <div class="form-group">
               <label><b>Status Dalam Keluarga :</b></label>
               <div class="form-check" style=" display: inline-block; margin-right: 10px;">
@@ -874,23 +869,28 @@
           <div class="form-group">
             <label><b>Gelombang :</b></label>
 
-            <label><b>Anda Masuk Gelombang </b></label>
+            @php
+                $gelombang = $datagelombang->nama_gelombang;
+                $insider = $datagelombang->nominal1;
+                $outsider = $datagelombang->nominal2;
+
+            @endphp
+
+            <label><b>Anda Masuk {{$gelombang}}</b></label>
+
+          </div>
+
+          <div class="form-group">
+            <label><b>Pembayaran Yang Harus Dibayar </b></label><br>
+            <label><b>Insider :  Rp.{{ number_format($insider, 0, ',', '.') }}</b></label> <br>
+            <label><b>Outsider :  Rp.{{ number_format($outsider, 0, ',', '.') }}</b></label> <br>
+
 
           </div>
 
           <div class="form-group">
             <label for="nama"><b>Masukan Jumlah Pembayaran Tunai :</b></label>
             <input type="text" class="form-control" id="jumlah_pembayaran_tunai" name="jumlah_pembayaran_tunai" required>
-          </div>
-
-          <div class="form-group">
-            <label for="nama"><b>Masukan Jumlah Pembayaran Angsuran 1 :</b></label>
-            <input type="text" class="form-control" id="jumlah_pembayaran_angsuran_1" name="jumlah_pembayaran_angsuran_1" required>
-          </div>
-
-          <div class="form-group">
-            <label for="nama"><b>Masukan Jumlah Pembayaran Angsuran 2 :</b></label>
-            <input type="text" class="form-control" id="jumlah_pembayaran_angsuran_2" name="jumlah_pembayaran_angsuran_2" required>
           </div>
 
         </div>

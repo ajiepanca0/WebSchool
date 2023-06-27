@@ -167,6 +167,8 @@
                                         <tr>
                                             <th>Nama Gelombang</th>
                                             <th>Batas Gelombang</th>
+                                            <th>Nominal Insider</th>
+                                            <th>Nominal Ousider</th>
                                             <th>created_at</th>
                                             <th>Action</th>
                                             
@@ -179,6 +181,8 @@
                                         <tr>
                                             <td>{{$item->nama_gelombang}}</td>
                                             <td>{{$item->batas_gelombang}}</td>
+                                            <td>Rp.{{$item->nominal1}}</td>
+                                            <td>Rp.{{$item->nominal2}}</td>
                                             <td>{{$item->created_at}}</td>
                                             <td>
                                                 <a style="margin-top: 2%" href="#modalEditGelombang{{$item->id}}" data-toggle="modal" class="btn btn-primary "><i class="fa fa-edit"></i>Edit</a>
@@ -266,7 +270,20 @@
                         <label for="date">Batas Gelombang</label>
                         <input type="date" class="form-control" name="batas_gelombang" placeholder="Masukan Batas Gelombang">
                     </div>
+
+                    <div class="form-group">
+                        <label for="nominal">Nominal Insider</label>
+                        <input type="number" class="form-control"   name="nominal1" placeholder="Masukan Nominal Insider">
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="nominal">Nominal Outsider</label>
+                        <input type="number" class="form-control"   name="nominal2" placeholder="Masukan Nominal Outsider">
+                    </div>
     
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-coklat">Save changes</button>
@@ -302,6 +319,18 @@
                     <div class="form-group">
                         <label for="date">Batas Gelombang</label>
                         <input type="date" class="form-control" value="{{$d->batas_gelombang}}" name="batas_gelombang" placeholder="Masukan Batas Gelombang">
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="nominal">Nominal Insider</label>
+                        <input type="number" class="form-control"  value="{{$d->nominal1}}" name="nominal1" placeholder="Masukan Nominal Insider">
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="nominal">Nominal Outsider</label>
+                        <input type="number" class="form-control"  value="{{$d->nominal2}}" name="nominal2" placeholder="Masukan Nominal Outsider">
                     </div>
     
                     <div class="modal-footer">

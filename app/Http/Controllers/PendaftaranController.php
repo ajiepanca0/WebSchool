@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gelombang;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use TCPDF;
@@ -11,7 +12,10 @@ class PendaftaranController extends Controller
 {
     public function index()
     {
-        return view('pendaftaran');
+        $datenow = date('Y-m-d H:i:s');
+        $data['datagelombang'] = Gelombang::whereDate('batas_gelombang', '>=',$datenow )->first();
+
+        return view('pendaftaran',$data);
     }
 
     public function sendPendaftaran(Request $request)
