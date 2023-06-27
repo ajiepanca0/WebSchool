@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GelombangController;
+use App\Http\Controllers\KodeController;
 use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\ProfileController;
@@ -43,3 +44,8 @@ Route::post('/tambahgelombang', [GelombangController::class, 'tambahgelombang'])
 Route::post('/gelombang/{id}/update', [GelombangController::class,'gelombangupdate'])->name('gelombangupdate');
 Route::post('/gelombang/{id}/delete', [GelombangController::class,'gelombangdelete'])->name('gelombangdelete');
 
+
+Route::get('/kode', [KodeController::class, 'index']);
+Route::post('/tambahkode', [KodeController::class, 'tambahkode'])->name('tambahkode');
+Route::post('/kode/{id}/update', [KodeController::class,'kodeupdate'])->name('kodeupdate');
+Route::post('/kode/{id}/delete', [KodeController::class,'kodedelete'])->name('kodedelete');

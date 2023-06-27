@@ -61,7 +61,7 @@ class GelombangController extends Controller
         $promo = Gelombang::find($id);
         $promo->delete();
 
-        return redirect()->back()->with('success', ['title' => 'Berhasil Hapus', 'message' => 'Gelombang berhasil di hapu']);
+        return redirect()->back()->with('success', ['title' => 'Berhasil Hapus', 'message' => 'Gelombang berhasil di hapus']);
     }
 
     
