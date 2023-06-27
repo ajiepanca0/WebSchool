@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Ulasan_Alumni_Controller;
@@ -31,7 +32,8 @@ Route::get('/ulasanalumni', [Ulasan_Alumni_Controller::class, 'index']);
 Route::post('/tambahulasanalumni', [Ulasan_Alumni_Controller::class, 'tambahUlasan'])->name('tambahulasanalumni');
 Route::get('/ubahstatus/{id}', [Ulasan_Alumni_Controller::class, 'ubahStatus'])->name('ubahstatus');
 
-
-Route::post('/tambahkritiksaran', [Ulasan_Alumni_Controller::class, 'tambahUlasan'])->name('tambahkritiksaran');
+Route::get('/kritiksaran', [KritikSaranController::class, 'index']);
+Route::post('/tambahkritiksaran', [KritikSaranController::class, 'tambahKritikSaran'])->name('tambahkritiksaran');
+Route::post('/kritiksaran/{id}/update', [KritikSaranController::class,'updateKritikSaran'])->name('kritiksaranUpdate');
 
 

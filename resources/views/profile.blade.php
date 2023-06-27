@@ -605,19 +605,21 @@
         </div>
 
 
-      <div class="row">
-          <a style="color: white; margin-top:2%"><b>ajiepanca</b></a>
+      @foreach ($datakritiksaran as $item)
+          
+      <div class="row" style="margin-bottom: 2%">
+          <a style="color: white; margin-top:2%"><b>{{$item->nama}}</b></a>
           <div class="col-lg-12 cta-row-container ">
             <a class="cta-btn align-middle" href="#">
               <table>
                 <thead>
                   <tr>
-                    <th>Kritik/Saran</th>
+                    <th>Kritik/Saran :</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Di perbanyak lagi fasilitas yang ada</td>
+                    <td>" {{$item->kritiksaran}} "</td>
                   </tr>
                 </tbody>
               </table>
@@ -629,18 +631,21 @@
               <table>
                 <thead>
                   <tr>
-                    <th><b>Balasan</b></th>
+                    <th><b>Balasan : </b></th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>Terima kasih atas masukan Anda. Kami akan mempertimbangkan untuk meningkatkan fasilitas yang tersedia.</td>
+                <tr>
+                    <tbody>
+                    <td>" {{$item->balasan}} "</td>
                   </tr>
                 </tbody>
               </table>
             </a>
           </div>
       </div>
+
+      @endforeach
+
 
     </section><!-- #call-to-action -->
 
@@ -744,8 +749,8 @@
               </div>
 
               <div class="form-group">
-                <label for="ulasan">Kritik / Saran :</label>
-                <textarea class="form-control" id="ulasan" name="ulasan" rows="3" placeholder="Tulis ulasan Anda"></textarea>
+                <label for="kritiksaran">Kritik / Saran :</label>
+                <textarea class="form-control" id="kritiksaran" name="kritiksaran" rows="3" placeholder="Tulis kritiksaran Anda"></textarea>
               </div>
     
               <div class="modal-footer">
@@ -778,16 +783,16 @@
   <script src="assets/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
 
-  @if(session('success'))
-    <script>
+  <script>
+    @if(session('success'))
         Swal.fire({
-            title: 'Ulasan Berhasil Ditambahkan!',
-            text: '{{ session('success') }}',
+            title: "{!! session('success.title') !!}",
+            text: "{!! session('success.message') !!}",
             icon: 'success',
             confirmButtonText: 'OK'
         });
-    </script>
-@endif
+    @endif
+</script>
 
 
 </body>

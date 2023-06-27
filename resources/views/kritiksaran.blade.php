@@ -152,13 +152,13 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Ulasan Alumni</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Kirik Saran</h1>
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <button  type="button" class="btn btn-coklat" data-toggle="modal" data-target="#ulasanAlumniModal">
+                            {{-- <button  type="button" class="btn btn-coklat" data-toggle="modal" data-target="#ulasanAlumniModal">
                                 Tambah Ulasan Alumni
-                              </button>                            
+                              </button>                             --}}
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -167,9 +167,8 @@
                                         <tr>
                                             <th>Nama</th>
                                             <th>Email</th>
-                                            <th>Ulasan</th>
-                                            <th>Foto</th>
-                                            <th>Status</th>
+                                            <th>Kritik / Saran</th>
+                                            <th>Balasan</th>
                                             <th>created_at</th>
                                             <th>Action</th>
                                             
@@ -177,25 +176,17 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($dataulasanAlumni as $item)
+                                        @foreach ($datakritiksaran as $item)
                                         
                                         <tr>
                                             <td>{{$item->nama}}</td>
                                             <td>{{$item->email}}</td>
-                                            <td>{{$item->ulasan}}</td>
-                                            <td>
-                                                @if ($item->foto)
-                                                    <div>
-                                                        <img src="{{ asset('storage/images/alumni/'.$item->foto) }}" alt="Foto Alumni" width="200" height="200">
-                                                    </div>
-                                                @endif
-                                            </td>
-                                            <td>{{$item->status}}</td>
+                                            <td>{{$item->kritiksaran}}</td>
+                                            <td>{{$item->balasan}}</td>
                                             <td>{{$item->created_at}}</td>
                                             <td>
-                                                <a style="margin-top: 2%" href="#modalEditBlog{{$item->id}}" data-toggle="modal" class="btn btn-primary "><i class="fa fa-edit"></i>Edit</a>
+                                                <a style="margin-top: 2%" href="#modalEditKritikSaran{{$item->id}}" data-toggle="modal" class="btn btn-primary "><i class="fa fa-edit"></i>Edit</a>
                                                 <a style="margin-top: 2%" href="#modalHapusBlog{{$item->id}}" data-toggle="modal" class="btn btn-danger "><i class="fa fa-trash"></i>Hapus</a>
-                                                <a style="margin-top: 2%" href="{{ route('ubahstatus', ['id' => $item->id]) }}" class="btn btn-primary">Ubah Status</a>
                                             </td>
 
                                         </tr>
@@ -302,33 +293,24 @@
         </div>
     </div>
 
-{{-- 
-    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    @foreach($datakritiksaran as $d)
+    <div class="modal fade bd-example-modal-lg" id="modalEditKritikSaran{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Tambah Blog</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Balas</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('addBlog') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('kritiksaranUpdate', ['id' => $d->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="judul">Judul</label>
-                        <input type="text" class="form-control" name="judul" placeholder="Masukan Judul">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="deskripsi">Deskripsi</label>
-                        <input type="text" class="form-control" name="deskripsi" placeholder="Masukan Deskripsi">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="foto">Foto</label>
-                        <input type="file" class="form-control" name="foto" placeholder="Masukan Foto">
+                        <label for="balasan">Balasan</label>
+                        <input type="text" class="form-control" value="{{$d->balasan}}" name="balasan" placeholder="Masukan Balasan">
                     </div>
 
                     <div class="modal-footer">
@@ -341,6 +323,10 @@
           </div>
         </div>
     </div>
+    @endforeach
+
+{{-- 
+
 
     @foreach($datablog as $d)
     <div class="modal fade bd-example-modal-lg" id="modalEditBlog{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -433,6 +419,7 @@
 
     <!-- Page level custom scripts -->
     <script src="admin/assets/js/demo/datatables-demo.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
 
   <script>

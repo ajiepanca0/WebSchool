@@ -53,7 +53,7 @@ class Ulasan_Alumni_Controller extends Controller
             'updated_at'=> date('Y-m-d H:i:s'),
         ]);
 
-        return redirect()->back()->with('success', 'Menunggu Konfirmasi');
+        return redirect()->back()->with('success', ['title' => 'Berhasil Menambahkan', 'message' => 'Terima kasih. Mohon Menunggu Konfirmasi']);
 
     }
 
@@ -72,6 +72,6 @@ class Ulasan_Alumni_Controller extends Controller
         $item->save();
 
         // Redirect ke halaman yang sesuai atau tampilkan pesan berhasil
-        return redirect()->back()->with('success', 'Status item berhasil diubah.');
+        return redirect()->back()->with('success', ['title' => 'Berhasil', 'message' => 'ulasan alumni berhasil ditampilkan']);
     }
 }
