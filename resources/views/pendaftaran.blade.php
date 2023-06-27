@@ -999,6 +999,8 @@
 
           </div>
 
+
+
           
           <div class="form-group">
             <label><b>Semester :</b></label>
@@ -1024,7 +1026,7 @@
     </div>
   </section>
 
-  <button type="submit" style="background:#4fa376; color:white" class="btn btn-coklat btn-user btn-block"> Send Data </button>
+  <button type="submit" style="background:#4fa376; color:white" class="btn btn-coklat btn-user btn-block"> Simpan Data </button>
 
 </form>
   <!--==========================

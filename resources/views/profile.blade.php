@@ -103,7 +103,7 @@
     <div class="intro-content">
       <h2>Madrasah Aliyah<br>Al Falah</h2>
       <div>
-        <a href="#about" class="btn-get-started scrollto">Daftar</a>
+        <a href="/pendaftaran" class="btn-get-started scrollto">Daftar</a>
         <a href="#about" class="btn-projects scrollto">Mulai</a>
       </div>
     </div>
@@ -354,7 +354,8 @@
         <div class="section-header">
           <h2>Ulasan alumni</h2>
           <p>Berikut ini beberapa contoh ulasan dari alumni yang pernah berpendidikan disini</p>
-          <button style="margin-top: 1%" type="button" class="btn-primary" data-toggle="modal" data-target="#ulasanAlumniModal">
+
+          <button style="margin-top: 1%" type="submit" data-toggle="modal" data-target="#ulasanAlumniModal">
             Tambah Ulasan
           </button>          
         </div>
@@ -608,7 +609,7 @@
       @foreach ($datakritiksaran as $item)
           
       <div class="row" style="margin-bottom: 2%">
-          <a style="color: white; margin-top:2%"><b>{{$item->nama}}</b></a>
+          <a style="color: white; margin-top:2%"><b>* {{$item->nama}}</b></a>
           <div class="col-lg-12 cta-row-container ">
             <a class="cta-btn align-middle" href="#">
               <table>
@@ -678,7 +679,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Blog</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Ulasan</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
