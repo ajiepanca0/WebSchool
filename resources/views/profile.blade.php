@@ -99,8 +99,8 @@
     <div class="intro-content">
       <h2>Madrasah Aliyah<br>Al Falah</h2>
       <div>
-        <a href="#about" class="btn-get-started scrollto">Mulai</a>
-        <a href="#portfolio" class="btn-projects scrollto">Visi - Misi</a>
+        <a href="#about" class="btn-get-started scrollto">Daftar</a>
+        <a href="#about" class="btn-projects scrollto">Mulai</a>
       </div>
     </div>
 
@@ -348,69 +348,37 @@
     <section id="testimonials" class="wow fadeInUp">
       <div class="container">
         <div class="section-header">
-          <h2>Testimonials</h2>
-          <p>Sed tamen tempor magna labore dolore dolor sint tempor duis magna elit veniam aliqua esse amet veniam enim export quid quid veniam aliqua eram noster malis nulla duis fugiat culpa esse aute nulla ipsum velit export irure minim illum fore</p>
+          <h2>Ulasan alumni</h2>
+          <p>Berikut ini beberapa contoh ulasan dari alumni yang pernah berpendidikan</p>
+          <button style="margin-top: 1%" type="button" class="btn-primary" data-toggle="modal" data-target="#ulasanAlumniModal">
+            Tambah Ulasan
+          </button>          
         </div>
+
         <div class="owl-carousel testimonials-carousel">
 
-            <div class="testimonial-item">
-              <p>
-                <img src="assets/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                <img src="assets/img/quote-sign-right.png" class="quote-sign-right" alt="">
-              </p>
-              <img src="assets/img/testimonial-1.jpg" class="testimonial-img" alt="">
-              <h3>Saul Goodman</h3>
-              <h4>Ceo &amp; Founder</h4>
-            </div>
+          @foreach ($dataulasanalumni as $item)
+              
 
             <div class="testimonial-item">
               <p>
+
                 <img src="assets/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                {{$item->ulasan}}
                 <img src="assets/img/quote-sign-right.png" class="quote-sign-right" alt="">
               </p>
-              <img src="assets/img/testimonial-2.jpg" class="testimonial-img" alt="">
-              <h3>Sara Wilsson</h3>
-              <h4>Designer</h4>
+              <img src="{{ asset('storage/images/alumni/'.$item->foto) }}" class="testimonial-img" alt="">
+              <h3>{{$item->nama}}</h3>
+              <h4>{{$item->pekerjaan}}</h4>
             </div>
 
-            <div class="testimonial-item">
-              <p>
-                <img src="assets/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                <img src="assets/img/quote-sign-right.png" class="quote-sign-right" alt="">
-              </p>
-              <img src="assets/img/testimonial-3.jpg" class="testimonial-img" alt="">
-              <h3>Jena Karlis</h3>
-              <h4>Store Owner</h4>
-            </div>
+            @endforeach
 
-            <div class="testimonial-item">
-              <p>
-                <img src="assets/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                <img src="assets/img/quote-sign-right.png" class="quote-sign-right" alt="">
-              </p>
-              <img src="assets/img/testimonial-4.jpg" class="testimonial-img" alt="">
-              <h3>Matt Brandon</h3>
-              <h4>Freelancer</h4>
-            </div>
-
-            <div class="testimonial-item">
-              <p>
-                <img src="assets/img/quote-sign-left.png" class="quote-sign-left" alt="">
-                Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                <img src="assets/img/quote-sign-right.png" class="quote-sign-right" alt="">
-              </p>
-              <img src="assets/img/testimonial-5.jpg" class="testimonial-img" alt="">
-              <h3>John Larson</h3>
-              <h4>Entrepreneur</h4>
-            </div>
 
         </div>
 
       </div>
+
     </section><!-- #testimonials -->
 
     <!--==========================
@@ -654,6 +622,58 @@
 
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
+  <div class="modal fade bd-example-modal-lg" id="ulasanAlumniModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Blog</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <form action="{{ route('tambahulasanalumni') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="judul">Nama</label>
+                    <input type="text" class="form-control" name="nama" placeholder="Masukan Nama">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="Masukan Email">
+                </div>
+
+                <div class="form-group">
+                  <label for="ulasan">Ulasan :</label>
+                  <textarea class="form-control" id="ulasan" name="ulasan" rows="3" placeholder="Tulis ulasan Anda"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="pekerjaan">Pekerjaan</label>
+                  <input type="text" class="form-control" name="pekerjaan" placeholder="Masukan pekerjaan">
+              </div>
+
+              
+                <div class="form-group">
+                  <label for="foto">Foto</label>
+                  <input type="file" class="form-control" name="foto" placeholder="Masukan Foto Anda">
+              </div>
+      
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-coklat">Save changes</button>
+                </div>
+            </form>
+
+        </div>
+      </div>
+    </div>
+</div>
+
+
   <!-- JavaScript Libraries -->
   <script src="assets/lib/jquery/jquery.min.js"></script>
   <script src="assets/lib/jquery/jquery-migrate.min.js"></script>
@@ -673,4 +693,7 @@
   <script src="assets/js/main.js"></script>
 
 </body>
+
+
+
 </html>
