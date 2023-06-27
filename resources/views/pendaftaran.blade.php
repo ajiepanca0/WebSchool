@@ -27,6 +27,7 @@
 
   <!-- Main Stylesheet File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- =======================================================
     Theme Name: Reveal
@@ -174,7 +175,7 @@
               <label for="saudara_kandung"><b>Jumlah Saudara Kandung :</b></label>
               <input type="number" class="form-control" id="saudara_kandung" name="saudara_kandung" required>
             </div>
-            
+
             <div class="form-group">
               <label><b>Status Dalam Keluarga :</b></label>
               <div class="form-check" style=" display: inline-block; margin-right: 10px;">
@@ -856,48 +857,75 @@
     </div>
   </section>
 
-
-  <section id="registration" style="margin-top: 5%;  background:#4fa376">
+  <section id="registration" style="margin-top: 5%;  background:#4fa376; padding:10%">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-12">
-          <div class="section-header">
-            <h2>Biaya Pendaftaran</h2>
-            <p></p>
-          </div>          
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="section-header">
+                    <h2>Biaya Pendaftaran</h2>
+                    <p></p>
+                </div>
 
-          <div class="form-group">
-            <label><b>Gelombang :</b></label>
+                @php
+                    $gelombang = $datagelombang->nama_gelombang;
+                    $insider = $datagelombang->nominal1;
+                    $outsider = $datagelombang->nominal2;
+                @endphp
 
-            @php
-                $gelombang = $datagelombang->nama_gelombang;
-                $insider = $datagelombang->nominal1;
-                $outsider = $datagelombang->nominal2;
+                <div class="form-group">
+                    <label><b>Gelombang :</b></label>
+                    <label><b>Anda Masuk {{$gelombang}}</b></label>
+                </div>
 
-            @endphp
+                <div class="form-group">
+                    <label><b>Pembayaran Yang Harus Dibayar </b></label><br>
+                    <label><b>Insider :  Rp.<span id="insider">{{ number_format($insider, 0, ',', '.') }}</span></b></label> <br>
+                    <label><b>Outsider :  Rp.<span id="outsider">{{ number_format($outsider, 0, ',', '.') }}</span></b></label> <br>
+                </div>
 
-            <label><b>Anda Masuk {{$gelombang}}</b></label>
+                <div class="form-group">
+                    <label for="nama"><b>Masukan Voucher :</b></label>
+                    <input type="text" style="width: 50%" class="form-control" id="kode" name="kode" required>
+                </div>
 
-          </div>
+                <button type="button" id="btnSimpan" style="background:#0a00c7; color:white; width:20%;" class="btn btn-coklat btn-user btn-block">Simpan Data</button>
 
-          <div class="form-group">
-            <label><b>Pembayaran Yang Harus Dibayar </b></label><br>
-            <label><b>Insider :  Rp.{{ number_format($insider, 0, ',', '.') }}</b></label> <br>
-            <label><b>Outsider :  Rp.{{ number_format($outsider, 0, ',', '.') }}</b></label> <br>
-
-
-          </div>
-
-          <div class="form-group">
-            <label for="nama"><b>Masukan Jumlah Pembayaran Tunai :</b></label>
-            <input type="text" class="form-control" id="jumlah_pembayaran_tunai" name="jumlah_pembayaran_tunai" required>
-          </div>
-
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 
+<script>
+  $(document).ready(function() {
+      $('#btnSimpan').click(function() {
+          var kode = $('#kode').val();
+
+          $.ajax({
+              type: 'POST',
+              url: '{{ route('updateNominal') }}',
+              data: {
+                  '_token': '{{ csrf_token() }}',
+                  'kode': kode
+              },
+              success: function(response) {
+                  if (response.success) {
+                      var insider = response.insider;
+                      var outsider = response.outsider;
+
+                      $('#insider').text(insider.toLocaleString('id-ID'));
+                      $('#outsider').text(outsider.toLocaleString('id-ID'));
+                  } else {
+                      alert(response.message);
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.log(xhr.responseText);
+                  alert('Terjadi kesalahan saat memproses permintaan.');
+              }
+          });
+      });
+  });
+</script>
 
   <section id="registration" style="margin-top: 5%">
     <div class="container">
@@ -1106,6 +1134,7 @@
 
   <!-- Template Main Javascript File -->
   <script src="assets/js/main.js"></script>
+  
 
 </body>
 </html>

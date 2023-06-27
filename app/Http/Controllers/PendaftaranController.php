@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gelombang;
+use App\Models\Kode;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use TCPDF;
@@ -240,6 +241,31 @@ class PendaftaranController extends Controller
         unlink($pdfFilePath);
 
         // return $pdfFilePath;
+    }
+    
+    public function updateNominal(Request $request)
+    {
+        $request->validate([
+            'kode' => 'required',
+        ]);
+
+        $kode = $request->input('kode');
+        $dataKode = Kode::where('kode', $kode)->first();
+
+        if ($dataKode) {
+            $datagelombang = Gelombang::first(); // Ganti dengan model yang sesuai
+
+            $insider = $datagelombang->nominal1 - $dataKode->nominal;
+            $outsider = $datagelombang->nominal2 - $dataKode->nominal;
+
+            $datagelombang->nominal1 = $insider;
+            $datagelombang->nominal2 = $outsider;
+            $datagelombang->save();
+
+            return response()->json(['success' => true, 'insider' => $insider, 'outsider' => $outsider]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Kode tidak valid']);
+        }
     }
     
 }

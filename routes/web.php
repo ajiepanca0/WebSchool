@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\GelombangController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KodeController;
 use App\Http\Controllers\KritikSaranController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Ulasan_Alumni_Controller;
@@ -26,9 +28,17 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
+
+Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
+
+
 Route::get('/', [ProfileController::class, 'index']);
 Route::get('/pendaftaran', [PendaftaranController::class, 'index']);
 Route::post('/sendPendaftaran', [PendaftaranController::class, 'sendPendaftaran'])->name('sendPendaftaran');
+Route::post('/update-nominal', [PendaftaranController::class, 'updateNominal'])->name('updateNominal');
 
 
 Route::get('/ulasanalumni', [Ulasan_Alumni_Controller::class, 'index']);
