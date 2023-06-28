@@ -340,10 +340,6 @@
               <input type="text" class="form-control" id="nama_ibu_ayah" name="nama_ibu_ayah" required>
             </div>
 
-            <div class="form-group">
-              <label for="nama"><b>Nama Ibu Kandung Ayah :</b></label>
-              <input type="text" class="form-control" id="nama_ibu_ayah" name="nama_ibu_ayah" required>
-            </div>
 
             
             <div class="form-group">
@@ -470,11 +466,6 @@
             <div class="form-group">
               <label for="nama"><b>Nik ibu Kandung :</b></label>
               <input type="text" class="form-control" id="no_nik_ibu" name="no_nik_ibu" required>
-            </div>
-
-            <div class="form-group">
-              <label for="nama"><b>Nama Ibu Kandung ibu :</b></label>
-              <input type="text" class="form-control" id="nama_ibu_ibu" name="nama_ibu_ibu" required>
             </div>
 
             <div class="form-group">
@@ -642,11 +633,6 @@
             <div class="form-group">
               <label for="nama"><b>Nik wali Kandung :</b></label>
               <input type="text" class="form-control" id="no_nik_wali" name="no_nik_wali" required>
-            </div>
-
-            <div class="form-group">
-              <label for="nama"><b>Nama Ibu Kandung wali :</b></label>
-              <input type="text" class="form-control" id="nama_ibu_wali" name="nama_ibu_wali" required>
             </div>
 
             <div class="form-group">
@@ -872,7 +858,7 @@
                     $outsider = $datagelombang->nominal2;
                 @endphp
 
-                <div class="form-group">
+                <div class="form-group" >
                     <label><b>Gelombang :</b></label>
                     <label><b>Anda Masuk {{$gelombang}}</b></label>
                 </div>
@@ -880,7 +866,11 @@
                 <div class="form-group">
                     <label><b>Pembayaran Yang Harus Dibayar </b></label><br>
                     <label><b>Insider :  Rp.<span id="insider">{{ number_format($insider, 0, ',', '.') }}</span></b></label> <br>
+                    <input type="text" style="width: 50%" class="form-control" id="insider" value="{{ number_format($insider, 0, ',', '.') }}" name="insider" required>
+
                     <label><b>Outsider :  Rp.<span id="outsider">{{ number_format($outsider, 0, ',', '.') }}</span></b></label> <br>
+                    <input type="text" style="width: 50%" class="form-control" id="outsider" value="{{ number_format($outsider, 0, ',', '.') }}" name="outsider" required>
+
                 </div>
 
                 <div class="form-group">
@@ -888,7 +878,7 @@
                     <input type="text" style="width: 50%" class="form-control" id="kode" name="kode" required>
                 </div>
 
-                <button type="button" id="btnSimpan" style="background:#0a00c7; color:white; width:20%;" class="btn btn-coklat btn-user btn-block">Simpan Data</button>
+                <button type="button" id="btnSimpan" style="background:#0a00c7; color:white; width:20%;" class="btn btn-coklat btn-user btn-block">Klaim Voucher</button>
 
             </div>
         </div>
@@ -899,13 +889,17 @@
   $(document).ready(function() {
       $('#btnSimpan').click(function() {
           var kode = $('#kode').val();
+          var gelombang = "{{ $gelombang }}";
+
+
 
           $.ajax({
               type: 'POST',
               url: '{{ route('updateNominal') }}',
               data: {
                   '_token': '{{ csrf_token() }}',
-                  'kode': kode
+                  'kode': kode,
+                  'gelombang': gelombang 
               },
               success: function(response) {
                   if (response.success) {
@@ -926,53 +920,6 @@
       });
   });
 </script>
-
-  <section id="registration" style="margin-top: 5%">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-12">
-          <div class="section-header">
-            <h2>PEMBAYARAN YANG DIKEHENDAKI ORANG TUA / WALI PESETA DIDIK</h2>
-            <p></p>
-          </div>          
-
-          <div class="form-group">
-            <label><b>Pilih Pembayaran :</b></label>
-            <div class="form-check" style=" display: inline-block; margin-right: 10px;">
-              <input class="form-check-input" type="radio" name="type_pembayaran" id="tunai" value="tunai" required>
-              <label class="form-check-label" for="tunai">
-                Tunai
-              </label>
-            </div>
-
-            <div class="form-check" style=" display: inline-block; margin-right: 10px;">
-              <input class="form-check-input" type="radio" name="type_pembayaran" id="angsuran" value="angsuran" required>
-              <label class="form-check-label" for="angsuran">
-                Angsuran
-              </label>
-            </div>
-
-          </div>
-
-          <div class="form-group">
-            <label for="nama"><b>Masukan Jumlah Pembayaran Tunai :</b></label>
-            <input type="text" class="form-control" id="jumlah_pembayaran_tunai" name="jumlah_pembayaran_tunai" required>
-          </div>
-
-          <div class="form-group">
-            <label for="nama"><b>Masukan Jumlah Pembayaran Angsuran 1 :</b></label>
-            <input type="text" class="form-control" id="jumlah_pembayaran_angsuran_1" name="jumlah_pembayaran_angsuran_1" required>
-          </div>
-
-          <div class="form-group">
-            <label for="nama"><b>Masukan Jumlah Pembayaran Angsuran 2 :</b></label>
-            <input type="text" class="form-control" id="jumlah_pembayaran_angsuran_2" name="jumlah_pembayaran_angsuran_2" required>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section id="registration" style="margin-top: 5%">
     <div class="container">
@@ -1101,7 +1048,7 @@
   <footer id="footer">
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong>Reveal</strong>. All Rights Reserved
+        &copy; Copyright <strong>AL-FALAH</strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!--

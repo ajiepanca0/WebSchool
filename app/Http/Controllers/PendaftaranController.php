@@ -97,10 +97,10 @@ class PendaftaranController extends Controller
             'no_induk_sekolah_asal' => 'required|max:50',
             'no_statistik_madrasah' => 'required|max:50',
             'npsn_sekolah_asal' => 'required|max:50',
-            'type_pembayaran' => 'required|max:50',
-            'jumlah_pembayaran_tunai' => 'required|integer',
-            'jumlah_pembayaran_angsuran_1' => 'required|integer',
-            'jumlah_pembayaran_angsuran_2' => 'required|integer',
+            // 'type_pembayaran' => 'required|max:50',
+            // 'jumlah_pembayaran_tunai' => 'required|integer',
+            // 'jumlah_pembayaran_angsuran_1' => 'required|integer',
+            // 'jumlah_pembayaran_angsuran_2' => 'required|integer',
             'nama_pembiayai' => 'required|max:100',
             'hubungan' => 'required|max:50',
             'no_hp_pembiayai' => 'required|max:20',
@@ -185,10 +185,10 @@ class PendaftaranController extends Controller
         $pendaftaran->no_induk_sekolah_asal = $validatedData['no_induk_sekolah_asal'];
         $pendaftaran->no_statistik_madrasah = $validatedData['no_statistik_madrasah'];
         $pendaftaran->npsn_sekolah_asal = $validatedData['npsn_sekolah_asal'];
-        $pendaftaran->type_pembayaran = $validatedData['type_pembayaran'];
-        $pendaftaran->jumlah_pembayaran_tunai = $validatedData['jumlah_pembayaran_tunai'];
-        $pendaftaran->jumlah_pembayaran_angsuran_1 = $validatedData['jumlah_pembayaran_angsuran_1'];
-        $pendaftaran->jumlah_pembayaran_angsuran_2 = $validatedData['jumlah_pembayaran_angsuran_2'];
+        // $pendaftaran->type_pembayaran = $validatedData['type_pembayaran'];
+        // $pendaftaran->jumlah_pembayaran_tunai = $validatedData['jumlah_pembayaran_tunai'];
+        // $pendaftaran->jumlah_pembayaran_angsuran_1 = $validatedData['jumlah_pembayaran_angsuran_1'];
+        // $pendaftaran->jumlah_pembayaran_angsuran_2 = $validatedData['jumlah_pembayaran_angsuran_2'];
         $pendaftaran->nama_pembiayai = $validatedData['nama_pembiayai'];
         $pendaftaran->hubungan = $validatedData['hubungan'];
         $pendaftaran->no_hp_pembiayai = $validatedData['no_hp_pembiayai'];
@@ -247,20 +247,23 @@ class PendaftaranController extends Controller
     {
         $request->validate([
             'kode' => 'required',
+            'gelombang' => 'required'
         ]);
 
         $kode = $request->input('kode');
+        $gelombang = $request->input('gelombang');
+
         $dataKode = Kode::where('kode', $kode)->first();
 
         if ($dataKode) {
-            $datagelombang = Gelombang::first(); // Ganti dengan model yang sesuai
+            $datagelombang = Gelombang::where('nama_gelombang',$gelombang)->first(); // Ganti dengan model yang sesuai
 
             $insider = $datagelombang->nominal1 - $dataKode->nominal;
             $outsider = $datagelombang->nominal2 - $dataKode->nominal;
 
-            $datagelombang->nominal1 = $insider;
-            $datagelombang->nominal2 = $outsider;
-            $datagelombang->save();
+            // $datagelombang->nominal1 = $insider;
+            // $datagelombang->nominal2 = $outsider;
+            // $datagelombang->save();
 
             return response()->json(['success' => true, 'insider' => $insider, 'outsider' => $outsider]);
         } else {
