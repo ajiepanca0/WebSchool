@@ -11,9 +11,6 @@ class ProfileController extends Controller
     {
         $data['dataulasanalumni'] = UlasanAlumni::where('status', 'terverifikasi')->get();
         $data['datakritiksaran'] = KritikSaran::whereNotNull('balasan')->where('balasan', '!=', '')->get();
-
-
         return view('profile',$data);
-
     }
 }

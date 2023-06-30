@@ -45,6 +45,8 @@ use App\Models\Gelombang;
 // Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
 // Route::get('register', [RegisterController::class, 'register'])->name('register');
 // Route::post('register/action', [RegisterController::class, 'actionregister'])->name('actionregister');
+require __DIR__.'/auth.php';
+
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
@@ -52,8 +54,12 @@ Route::get('/actionlogout', [LoginController::class, 'actionlogout'])->name('act
 
 Route::get('/', [ProfileController::class, 'index']);
 Route::get('/pendaftaran', [PendaftaranController::class, 'index']);
+Route::get('/listpendaftaran', [PendaftaranController::class, 'show'])->middleware('auth');
 Route::post('/sendPendaftaran', [PendaftaranController::class, 'sendPendaftaran'])->name('sendPendaftaran');
 Route::post('/update-nominal', [PendaftaranController::class, 'updateNominal'])->name('updateNominal');
+Route::get('detail/{id}', [PendaftaranController::class, 'detailpendaftar'])->name('detailpendaftar');
+Route::get('/verifikasidata/{id}', [PendaftaranController::class, 'verifikasidata'])->name('verifikasidata')->middleware('auth');
+
 
 
 Route::get('/ulasanalumni', [Ulasan_Alumni_Controller::class, 'index'])->middleware('auth');
@@ -76,6 +82,7 @@ Route::post('/kode/{id}/update', [KodeController::class,'kodeupdate'])->name('ko
 Route::post('/kode/{id}/delete', [KodeController::class,'kodedelete'])->name('kodedelete')->middleware('auth');
 
 
+
+
 Route::get('/dashboard', function () { return view('dashboard'); })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';

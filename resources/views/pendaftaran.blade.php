@@ -367,12 +367,12 @@
 
             <div class="form-group">
               <label for="nama"><b>Pekerjaan Ayah :</b></label>
-              <input type="text" class="form-control" id="pendidikan_ayah" name="pendidikan_ayah" required>
+              <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" required>
             </div>
 
             <div class="form-group">
               <label for="nama"><b>Penghasilan Ayah Perbulan :</b></label>
-              <input type="number" class="form-control" id="pendidikan_ayah" name="pendidikan_ayah" required>
+              <input type="number" class="form-control" id="penghasilan_ayah" name="penghasilan_ayah" required>
             </div>
 
 
@@ -499,12 +499,12 @@
 
             <div class="form-group">
               <label for="nama"><b>Pekerjaan ibu :</b></label>
-              <input type="text" class="form-control" id="pendidikan_ibu" name="pendidikan_ibu" required>
+              <input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu" required>
             </div>
 
             <div class="form-group">
               <label for="nama"><b>Penghasilan ibu Perbulan :</b></label>
-              <input type="number" class="form-control" id="pendidikan_ibu" name="pendidikan_ibu" required>
+              <input type="number" class="form-control" id="penghasilan_ibu" name="penghasilan_ibu" required>
             </div>
 
 
@@ -666,12 +666,12 @@
 
             <div class="form-group">
               <label for="nama"><b>Pekerjaan wali :</b></label>
-              <input type="text" class="form-control" id="pendidikan_wali" name="pendidikan_wali" required>
+              <input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali" required>
             </div>
 
             <div class="form-group">
               <label for="nama"><b>Penghasilan wali Perbulan :</b></label>
-              <input type="number" class="form-control" id="pendidikan_wali" name="pendidikan_wali" required>
+              <input type="number" class="form-control" id="penghasilan_wali" name="penghasilan_wali" required>
             </div>
 
 
@@ -865,10 +865,10 @@
 
                 <div class="form-group">
                     <label><b>Pembayaran Yang Harus Dibayar </b></label><br>
-                    <label><b>Insider :  Rp.<span id="insider">{{ number_format($insider, 0, ',', '.') }}</span></b></label> <br>
+                    <label><b>Insider :  Rp.<span name="insider" id="insider">{{ number_format($insider, 0, ',', '.') }}</span></b></label> <br>
                     <input type="text" style="width: 50%" class="form-control" id="insider" value="{{ number_format($insider, 0, ',', '.') }}" name="insider" required>
 
-                    <label><b>Outsider :  Rp.<span id="outsider">{{ number_format($outsider, 0, ',', '.') }}</span></b></label> <br>
+                    <label><b>Outsider :  Rp.<span name="outsider" id="outsider">{{ number_format($outsider, 0, ',', '.') }}</span></b></label> <br>
                     <input type="text" style="width: 50%" class="form-control" id="outsider" value="{{ number_format($outsider, 0, ',', '.') }}" name="outsider" required>
 
                 </div>
@@ -908,6 +908,7 @@
 
                       $('#insider').text(insider.toLocaleString('id-ID'));
                       $('#outsider').text(outsider.toLocaleString('id-ID'));
+                      
                   } else {
                       alert(response.message);
                   }

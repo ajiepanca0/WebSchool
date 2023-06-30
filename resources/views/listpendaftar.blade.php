@@ -59,7 +59,8 @@
             <div class="sidebar-heading">
                 Admin
             </div>
-            
+
+
             <li class="nav-item">
                 <a class="nav-link" href="/ulasanalumni">
                     <i class="fas fa-fw fa-chart-area"></i>
@@ -84,6 +85,8 @@
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Kode</span></a>
             </li>
+
+
             
 
             <!-- Divider -->
@@ -156,50 +159,43 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Ulasan Alumni</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Pendaftaran Calon Siswa</h1>
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <button  type="button" class="btn btn-coklat" data-toggle="modal" data-target="#ulasanAlumniModal">
-                                Tambah Ulasan Alumni
-                              </button>                            
+                            <button  type="button" class="btn btn-coklat" data-toggle="modal" data-target="#gelombangModal">
+                                Tambah 
+                            </button>                            
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Kode Pendaftaran</th>
                                             <th>Nama</th>
-                                            <th>Email</th>
-                                            <th>Ulasan</th>
-                                            <th>Foto</th>
+                                            <th>Nik</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Waktu Pendaftaran</th>
                                             <th>Status</th>
-                                            <th>created_at</th>
                                             <th>Action</th>
                                             
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($dataulasanAlumni as $item)
+                                        @foreach ($datapendaftaran as $item)
                                         
                                         <tr>
+                                            <td>{{$item->kode_pendaftaran}}</td>
                                             <td>{{$item->nama}}</td>
-                                            <td>{{$item->email}}</td>
-                                            <td>{{$item->ulasan}}</td>
-                                            <td>
-                                                @if ($item->foto)
-                                                    <div>
-                                                        <img src="{{ asset('storage/images/alumni/'.$item->foto) }}" alt="Foto Alumni" width="200" height="200">
-                                                    </div>
-                                                @endif
-                                            </td>
-                                            <td>{{$item->status}}</td>
+                                            <td>{{$item->no_nik}}</td>
+                                            <td>{{$item->tgl_lahir}}</td>
                                             <td>{{$item->created_at}}</td>
+                                            <td>{{$item->status}}</td>
                                             <td>
-                                                <a style="margin-top: 2%" href="#modalEditBlog{{$item->id}}" data-toggle="modal" class="btn btn-primary "><i class="fa fa-edit"></i>Edit</a>
-                                                <a style="margin-top: 2%" href="#modalHapusBlog{{$item->id}}" data-toggle="modal" class="btn btn-danger "><i class="fa fa-trash"></i>Hapus</a>
-                                                <a style="margin-top: 2%" href="{{ route('ubahstatus', ['id' => $item->id]) }}" class="btn btn-primary">Ubah Status</a>
+                                                <a style="margin-top: 2%" href="{{ route('detailpendaftar', ['id' => $item->id]) }}" class="btn btn-primary"><i class="fa fa-edit"></i>Detail</a>
+                                                <a style="margin-top: 2%" href="#modalHapusGelombang{{$item->id}}" data-toggle="modal" class="btn btn-danger "><i class="fa fa-trash"></i>Hapus</a>
                                             </td>
 
                                         </tr>
@@ -271,40 +267,42 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="ulasanAlumniModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="gelombangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Tambah Blog</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Tambah Gelombang</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
     
-                <form action="{{ route('tambahulasanalumni') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tambahgelombang') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="judul">Nama</label>
-                        <input type="text" class="form-control" name="nama" placeholder="Masukan Nama">
+                        <label for="judul">Nama Gelombang</label>
+                        <input type="text" class="form-control" name="nama_gelombang" placeholder="Masukan Nama Gelombang">
                     </div>
     
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Masukan Email">
+                        <label for="date">Batas Gelombang</label>
+                        <input type="date" class="form-control" name="batas_gelombang" placeholder="Masukan Batas Gelombang">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nominal">Nominal Insider</label>
+                        <input type="number" class="form-control"   name="nominal1" placeholder="Masukan Nominal Insider">
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="nominal">Nominal Outsider</label>
+                        <input type="number" class="form-control"   name="nominal2" placeholder="Masukan Nominal Outsider">
                     </div>
     
-                    <div class="form-group">
-                      <label for="ulasan">Ulasan :</label>
-                      <textarea class="form-control" id="ulasan" name="ulasan" rows="3" placeholder="Tulis ulasan Anda"></textarea>
-                    </div>
-    
-                    <div class="form-group">
-                      <label for="foto">Foto</label>
-                      <input type="file" class="form-control" name="foto" placeholder="Masukan Foto Anda">
-                  </div>
-          
-    
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-coklat">Save changes</button>
@@ -317,47 +315,8 @@
     </div>
 
 {{-- 
-    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Tambah Blog</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-
-                <form action="{{ route('addBlog') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="judul">Judul</label>
-                        <input type="text" class="form-control" name="judul" placeholder="Masukan Judul">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="deskripsi">Deskripsi</label>
-                        <input type="text" class="form-control" name="deskripsi" placeholder="Masukan Deskripsi">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="foto">Foto</label>
-                        <input type="file" class="form-control" name="foto" placeholder="Masukan Foto">
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-coklat">Save changes</button>
-                    </div>
-                </form>
-
-            </div>
-          </div>
-        </div>
-    </div>
-
-    @foreach($datablog as $d)
-    <div class="modal fade bd-example-modal-lg" id="modalEditBlog{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @foreach($datagelombang as $d)
+    <div class="modal fade bd-example-modal-lg" id="modalEditGelombang{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -368,23 +327,31 @@
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('blogUpdate', ['id' => $d->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('gelombangupdate', ['id' => $d->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
-                        <label for="judul">Judul</label>
-                        <input type="text" class="form-control" value="{{$d->judul}}" name="judul" placeholder="Masukan Judul">
-                    </div>
 
                     <div class="form-group">
-                        <label for="deskripsi">Deskripsi</label>
-                        <input type="text" value="{{$d->deskripsi}}" class="form-control" name="deskripsi" placeholder="Masukan Deskripsi">
+                        <label for="judul">Nama Gelombang</label>
+                        <input type="text" class="form-control" value="{{$d->nama_gelombang}}" name="nama_gelombang" placeholder="Masukan Nama Gelombang">
                     </div>
-
+    
                     <div class="form-group">
-                        <label for="foto">Foto</label>
-                        <input type="file" value="{{ asset('storage/images/blog/'.$item->foto) }}" class="form-control" name="foto" placeholder="Masukan Foto">
+                        <label for="date">Batas Gelombang</label>
+                        <input type="date" class="form-control" value="{{$d->batas_gelombang}}" name="batas_gelombang" placeholder="Masukan Batas Gelombang">
                     </div>
 
+                    
+                    <div class="form-group">
+                        <label for="nominal">Nominal Insider</label>
+                        <input type="number" class="form-control"  value="{{$d->nominal1}}" name="nominal1" placeholder="Masukan Nominal Insider">
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="nominal">Nominal Outsider</label>
+                        <input type="number" class="form-control"  value="{{$d->nominal2}}" name="nominal2" placeholder="Masukan Nominal Outsider">
+                    </div>
+    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-coklat">Save changes</button>
@@ -397,8 +364,8 @@
     </div>
     @endforeach
 
-    @foreach($datablog as $g)
-    <div class="modal fade bd-example-modal-lg" id="modalHapusBlog{{$g->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @foreach($datagelombang as $g)
+    <div class="modal fade bd-example-modal-lg" id="modalHapusGelombang{{$g->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -409,13 +376,13 @@
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('blogDelete', ['id' => $d->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('gelombangdelete', ['id' => $d->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <input type="hidden" value="{{$g->id}}" name="id" required>
 
                     <div class="form-group">
-                        <h4>Apakah Anda Ingin Menghapus Blog ini?</h4>
+                        <h4>Apakah Anda Ingin Menghapus Gelombang ini?</h4>
                     </div>
 
                     <div class="modal-footer">
@@ -428,8 +395,8 @@
           </div>
         </div>
     </div>
-    @endforeach
- --}}
+    @endforeach --}}
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="admin/assets/vendor/jquery/jquery.min.js"></script>

@@ -19,8 +19,83 @@ class PendaftaranController extends Controller
         return view('pendaftaran',$data);
     }
 
+    public function show()
+    {
+        $data['datapendaftaran'] = Pendaftaran::get();
+        return view('listpendaftar',$data);
+    }
+
+    public function detailpendaftar($id)
+    {
+        
+        // $data = Pendaftaran::find($id);
+        $dataPendaftaran = Pendaftaran::find($id);
+        $datagelombang = Gelombang::whereDate('batas_gelombang', '>=',$dataPendaftaran->created_at )->first();
+
+        return view('detailpendaftar', compact('dataPendaftaran','datagelombang'));
+    }
+
+    public function verifikasidata($id)
+    {
+        // Temukan item berdasarkan ID
+        $item = Pendaftaran::find($id);
+
+        if (!$item) {
+            // Jika item tidak ditemukan, tampilkan pesan error atau redirect ke halaman yang sesuai
+            return redirect()->back()->with('error', 'Item tidak ditemukan.');
+        }
+
+        // Ubah status item
+        $item->status = 'terverifikasi';
+        $item->save();
+
+        // Redirect ke halaman yang sesuai atau tampilkan pesan berhasil
+        return redirect('/listpendaftaran')->with('success', ['title' => 'Berhasil Verifikasi', 'message' => 'Calon Siswa Berhasil Diverifikasi ']);
+    }
+
+
+
     public function sendPendaftaran(Request $request)
     {
+
+        
+        $datenow = date('Y-m-d H:i:s');
+        $datagelombang =  Gelombang::whereDate('batas_gelombang', '>=',$datenow )->first();
+
+
+        $kodevoucher = $request->kode;
+        $dataKode = Kode::where('kode', $kodevoucher)->first();
+
+
+        if ($kodevoucher) {
+            $datagelombang = Gelombang::where('id',$datagelombang->id)->first(); // Ganti dengan model yang sesuai
+            $insider = $datagelombang->nominal1 - $dataKode->nominal;
+            $outsider = $datagelombang->nominal2 - $dataKode->nominal;
+
+        }else{
+
+            $insider = $datagelombang->nominal1;
+            $outsider = $datagelombang->nominal2;
+
+        }
+
+        $tanggalSekarang = date('Ymd');
+        $barisTerakhir = Pendaftaran::latest()->first();
+
+        if ($barisTerakhir) {
+                    $kodePendaftaran = $tanggalSekarang . $barisTerakhir->id;
+        }else{
+            $kodePendaftaran = $tanggalSekarang . 1;
+        }
+
+        // dd($kodePendaftaran);
+
+        // dd($request->pendidikan_ayah,$request->pekerjaan_ayah,$request->penghasilan_ayah,
+        // $request->pendidikan_ibu,$request->pekerjaan_ibu,$request->penghasilan_ibu,
+        // $request->pendidikan_wali,$request->pekerjaan_wali,$request->penghasilan_wali);
+
+
+
         $validatedData = $request->validate([
             'nama' => 'required|max:100',
             'nisn' => 'required|max:100',
@@ -52,6 +127,8 @@ class PendaftaranController extends Controller
             'nama_ibu_ayah' => 'required|max:100',
             'status_ayah' => 'required|max:50',
             'pendidikan_ayah' => 'required|max:50',
+            'pekerjaan_ayah' => 'required|max:50',
+            'penghasilan_ayah' => 'required|max:50',
             'domisili_tempat_ayah' => 'required|max:100',
             'status_tempat_ayah' => 'required|max:50',
             'alamat_rumah_ayah' => 'required|max:100',
@@ -63,6 +140,8 @@ class PendaftaranController extends Controller
             'nama_ibu_ibu' => 'required|max:100',
             'status_ibu' => 'required|max:50',
             'pendidikan_ibu' => 'required|max:50',
+            'pekerjaan_ibu' => 'required|max:50',
+            'penghasilan_ibu' => 'required|max:50',
             'domisili_tempat_ibu' => 'required|max:100',
             'status_tempat_ibu' => 'required|max:50',
             'alamat_rumah_ibu' => 'required|max:100',
@@ -78,6 +157,8 @@ class PendaftaranController extends Controller
             'nama_ibu_wali' => 'required|max:100',
             'status_wali' => 'required|max:50',
             'pendidikan_wali' => 'required|max:50',
+            'pekerjaan_wali' => 'required|max:50',
+            'penghasilan_wali' => 'required|max:50',
             'domisili_tempat_wali' => 'required|max:100',
             'status_tempat_wali' => 'required|max:50',
             'alamat_rumah_wali' => 'required|max:100',
@@ -97,10 +178,6 @@ class PendaftaranController extends Controller
             'no_induk_sekolah_asal' => 'required|max:50',
             'no_statistik_madrasah' => 'required|max:50',
             'npsn_sekolah_asal' => 'required|max:50',
-            // 'type_pembayaran' => 'required|max:50',
-            // 'jumlah_pembayaran_tunai' => 'required|integer',
-            // 'jumlah_pembayaran_angsuran_1' => 'required|integer',
-            // 'jumlah_pembayaran_angsuran_2' => 'required|integer',
             'nama_pembiayai' => 'required|max:100',
             'hubungan' => 'required|max:50',
             'no_hp_pembiayai' => 'required|max:20',
@@ -108,8 +185,10 @@ class PendaftaranController extends Controller
             'diterima_semester' => 'required|max:50',
         ]);
 
-        $pendaftaran = new Pendaftaran();
 
+
+        $pendaftaran = new Pendaftaran();
+        $pendaftaran->kode_pendaftaran = $kodePendaftaran;
         $pendaftaran->nama = $validatedData['nama'];
         $pendaftaran->nisn = $validatedData['nisn'];
         $pendaftaran->no_kk = $validatedData['no_kk'];
@@ -140,6 +219,8 @@ class PendaftaranController extends Controller
         $pendaftaran->nama_ibu_ayah = $validatedData['nama_ibu_ayah'];
         $pendaftaran->status_ayah = $validatedData['status_ayah'];
         $pendaftaran->pendidikan_ayah = $validatedData['pendidikan_ayah'];
+        $pendaftaran->pekerjaan_ayah = $validatedData['pekerjaan_ayah'];
+        $pendaftaran->penghasilan_ayah = $validatedData['penghasilan_ayah'];
         $pendaftaran->domisili_tempat_ayah = $validatedData['domisili_tempat_ayah'];
         $pendaftaran->status_tempat_ayah = $validatedData['status_tempat_ayah'];
         $pendaftaran->alamat_rumah_ayah = $validatedData['alamat_rumah_ayah'];
@@ -151,6 +232,8 @@ class PendaftaranController extends Controller
         $pendaftaran->nama_ibu_ibu = $validatedData['nama_ibu_ibu'];
         $pendaftaran->status_ibu = $validatedData['status_ibu'];
         $pendaftaran->pendidikan_ibu = $validatedData['pendidikan_ibu'];
+        $pendaftaran->pekerjaan_ibu = $validatedData['pekerjaan_ibu'];
+        $pendaftaran->penghasilan_ibu = $validatedData['penghasilan_ibu'];
         $pendaftaran->domisili_tempat_ibu = $validatedData['domisili_tempat_ibu'];
         $pendaftaran->status_tempat_ibu = $validatedData['status_tempat_ibu'];
         $pendaftaran->alamat_rumah_ibu = $validatedData['alamat_rumah_ibu'];
@@ -166,6 +249,8 @@ class PendaftaranController extends Controller
         $pendaftaran->nama_ibu_wali = $validatedData['nama_ibu_wali'];
         $pendaftaran->status_wali = $validatedData['status_wali'];
         $pendaftaran->pendidikan_wali = $validatedData['pendidikan_wali'];
+        $pendaftaran->pekerjaan_wali = $validatedData['pekerjaan_wali'];
+        $pendaftaran->penghasilan_wali = $validatedData['penghasilan_wali'];
         $pendaftaran->domisili_tempat_wali = $validatedData['domisili_tempat_wali'];
         $pendaftaran->status_tempat_wali = $validatedData['status_tempat_wali'];
         $pendaftaran->alamat_rumah_wali = $validatedData['alamat_rumah_wali'];
@@ -185,21 +270,25 @@ class PendaftaranController extends Controller
         $pendaftaran->no_induk_sekolah_asal = $validatedData['no_induk_sekolah_asal'];
         $pendaftaran->no_statistik_madrasah = $validatedData['no_statistik_madrasah'];
         $pendaftaran->npsn_sekolah_asal = $validatedData['npsn_sekolah_asal'];
-        // $pendaftaran->type_pembayaran = $validatedData['type_pembayaran'];
-        // $pendaftaran->jumlah_pembayaran_tunai = $validatedData['jumlah_pembayaran_tunai'];
-        // $pendaftaran->jumlah_pembayaran_angsuran_1 = $validatedData['jumlah_pembayaran_angsuran_1'];
-        // $pendaftaran->jumlah_pembayaran_angsuran_2 = $validatedData['jumlah_pembayaran_angsuran_2'];
         $pendaftaran->nama_pembiayai = $validatedData['nama_pembiayai'];
         $pendaftaran->hubungan = $validatedData['hubungan'];
         $pendaftaran->no_hp_pembiayai = $validatedData['no_hp_pembiayai'];
         $pendaftaran->diterima_dikelas = $validatedData['diterima_dikelas'];
         $pendaftaran->diterima_semester = $validatedData['diterima_semester'];
+        $pendaftaran->kode = $kodevoucher;
+        $pendaftaran->insider = $insider;
+        $pendaftaran->outsider = $outsider;
 
         // Save the model
         $pendaftaran->save();
 
+        return redirect('/')->with('success', ['title' => 'Berhasil Mendaftar', 'message' => 'Berikut Kode Pendaftaran Anda '.$kodePendaftaran]);
+
+        // dd($pendaftaran);
+
+
         // return response()->json(['message' => 'Data saved successfully'], 200);
-        $this->generateFormPDF($pendaftaran);
+        // $this->generateFormPDF($pendaftaran);
         
 
     }
