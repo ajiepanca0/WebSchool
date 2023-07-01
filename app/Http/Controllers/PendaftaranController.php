@@ -30,7 +30,7 @@ class PendaftaranController extends Controller
         
         // $data = Pendaftaran::find($id);
         $dataPendaftaran = Pendaftaran::find($id);
-        $datagelombang = Gelombang::whereDate('batas_gelombang', '>=',$dataPendaftaran->created_at )->first();
+        $datagelombang = Gelombang::whereDate('batas_gelombang', '>',$dataPendaftaran->created_at )->first();
 
         return view('detailpendaftar', compact('dataPendaftaran','datagelombang'));
     }
@@ -335,7 +335,7 @@ class PendaftaranController extends Controller
     public function updateNominal(Request $request)
     {
         $request->validate([
-            'kode' => 'required',
+            // 'kode' => 'required',
             'gelombang' => 'required'
         ]);
 

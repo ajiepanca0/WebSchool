@@ -32,7 +32,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-coklat sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -47,7 +47,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/home">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -84,6 +84,13 @@
                 <a class="nav-link" href="/kode">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Kode</span></a>
+            </li>
+
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/listpendaftaran">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Pendaftaran</span></a>
             </li>
 
             
@@ -162,7 +169,7 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <button  type="button" class="btn btn-coklat" data-toggle="modal" data-target="#kodeModal">
+                            <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#kodeModal">
                                 Tambah Voucher
                               </button>                            
                         </div>
@@ -285,7 +292,7 @@
     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-coklat">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
     
@@ -322,7 +329,7 @@
     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-coklat">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
 
@@ -355,7 +362,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-coklat">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
 
